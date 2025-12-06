@@ -33,3 +33,8 @@ Evaluate the loss; Did it improve over a bigram model?
   
 </details>
 
+### Exercise 2
+Split up the dataset randomly into 80% train set, 10% dev set, 10% test set. 
+Train the bigram and trigram models only on the training set. 
+Evaluate them on dev and test splits. What can you see?
+
