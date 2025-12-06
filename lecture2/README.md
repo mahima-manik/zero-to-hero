@@ -60,11 +60,11 @@ Evaluate them on dev and test splits. What can you see?
   - Write gradient descent loop & improve the loss
 
   To evaluate on dev & test splits, calculate loss value on both the splits:
-  - Probability  of ys (_dev or test) in probs
-  ```python
-  dev_loss = -probs[torch.arange(num_dev), ys_dev].log().mean()
-  test_loss = -probs[torch.arange(num_test), ys_test].log().mean()
-  ```
+  - Convert the integer input into one-hot encoding
+  - Pass it through layer of neurons (`xs @ W`). This will give logits
+  - Exponentiate the logits to get the count
+  - Calculate probability distribution over the next character by normalizing across each row
+  - Loss is mean of sum of log probabilities. We take logs because, multiplying probabilities will give very small number.
   
   **Trigrams**
   - Same as in Exercise 1
