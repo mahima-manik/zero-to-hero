@@ -26,11 +26,18 @@ Evaluate the loss; Did it improve over a bigram model?
   
   **Neural network approach:**
   - Form the input and output vectors xs and ys
-  - Initialize the weights using random normal distribution
+  - One-hot encoding. Since there are two characters, we append the one-hot encoding of both the input characters
+    ```python
+    xenc = F.one_hot(xs, num_classes=27).float() 
+    xenc = xenc.view(total_trigrams, 2*27)
+    ```
+  - Initialize the weights using random normal distribution. Weights should be able to handle 27*2 dimension input
+    ```python
+    W = torch.randn(27*2, 27, requires_grad=True)
+    ```
   - Calulate loss function
-  - Perform Gradient descent
-  - make more names
-  
+  - Write gradient descent loop & improve the loss
+  - make more names (sampling)
 </details>
 
 ### Exercise 2
@@ -38,3 +45,42 @@ Split up the dataset randomly into 80% train set, 10% dev set, 10% test set.
 Train the bigram and trigram models only on the training set. 
 Evaluate them on dev and test splits. What can you see?
 
+<details>
+  <summary>Solution</summary>
+  
+  **Data preparation**:
+  - Load the dataset into a list of names
+  - Shuffle the list
+  - Divide into 3 lists: train_list, dev_list and test_list
+  - Form stoi and itos
+
+  **Bigrams**:
+  - Create xs and ys for training
+  - Encode xs and ys using one-hot
+  - Write gradient descent loop & improve the loss
+
+  To evaluate on dev & test splits, calculate loss value on both the splits:
+  - Probability  of ys (_dev or test) in probs
+  ```python
+  dev_loss = -probs[torch.arange(num_dev), ys_dev].log().mean()
+  test_loss = -probs[torch.arange(num_test), ys_test].log().mean()
+  ```
+  
+  **Trigrams**
+  - Same as in Exercise 1
+</details>
+
+### Exercise 3
+
+Use the dev set to tune the strength of smoothing (or regularization) for the trigram model - i.e. try many possibilities and see which one works best based on the dev set loss. What patterns can you see in the train and dev set loss as you tune this strength? Take the best setting of the smoothing and evaluate on the test set once and at the end. How good of a loss do you achieve?
+
+<details>
+  <summary>Solution</summary>
+  
+  **Data preparation**:
+  - 
+
+  **Trigrams**
+  - 
+  
+</details>
