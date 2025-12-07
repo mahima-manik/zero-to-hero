@@ -1,0 +1,1 @@
+A Neural Probabilistic Language Model 2003 paper [here](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf)
