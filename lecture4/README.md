@@ -25,11 +25,38 @@ loss = 2.069702386856079 after 60000 iterations
 
 ## Activation problems
 
+There are three types of activation functions: binary, linear & non-linear. 
+
+In non-linear functions, results that are not proportional to the input. Examples are: sigmoid function, Tanh, ReLU and ELUs
+
+**Different activation functions**
+
+1. Sigmoid
+2. tanh
+3. ReLU
+4. Leaky ReLU
+5. Maxout
+6. ELU
+
+![Activation functions](activations.png)
+
+The activation function for your output layer is determined by the sort of prediction issue you’re solving. These are some ground guidelines to remember:
+
+- Regression — Linear Activation Function
+- Binary Classification — Sigmoid/Logistic Activation Function
+- Multiclass Classification — Softmax
+- Multilabel Classification — Sigmoid
+
+Based on neural-network architectue:
+- Convolutional Neural Network (CNN): ReLU activation function.
+- Recurrent Neural Network: Tanh and/or Sigmoid activation function.
+
+
 Imagine a tanh neuron. If all the outputs are close to 1 or close to -1, then  it is squashing the weights and suppressing lot of meaning in the hidden data. 
 
 ![Graph of tanh outputs](tanh_outputs.png)
 
-If the output of tanh is skewed towards 1 and -1 (as shown in the graph above), then during backpropagation, gradient is almost always equals to zero. That means there is no or very little influence of weights and biases on the gradient in backpropagation. It is pushed to 0s.
+If the output of tanh is skewed towards 1 and -1 (as shown in the graph above), then during backpropagation, gradient is almost always equals to zero. That means there is no or very little influence of weights and biases on the gradient in backpropagation. It is pushed to 0s. This is known as **vanishing gradient problem**
 
 ```python
 def tanh(self):
@@ -57,14 +84,36 @@ We can multiply W1, b1 by a factor of 0.1 or something. This will bring hpreact 
 
 When all examples give 0 gradient out on tanh, then it is called *dead neuron* - this neuron will never learn.
 
-**Different activation functions**
+**Kaiming init**
+We know we need to fix initialization, but by how much value we multiply weights and biases?
+Kaiming normalize initialization: torch.nn.init
 
-1. Sigmoid
-2. tanh
-3. ReLU
-4. Leaky ReLU
-5. Maxout
-6. ELU
+We want the neural network to have relatively simple activations, so we want unit gaussian throughout the network.
 
-![Activation functions](activations.png)
+Kaiming init is implemented in pytorch as torch.nn.init.kaiming_normal_.
 
+
+In practice, just normalizing by square root of fan-in is enough.
+
+
+Game in front of activation. 
+
+Standard deviation
+
+`sqrt(x) = x ** 0.5`
+
+### Batch Normalizarion
+2015 Google paper
+
+**Standard deviation** measures how spread out numbers in a data set are from their average (mean).
+
+Batch Normalization basically says, why don’t we just take the hidden states and normalize them to be gaussian. This will give us uniform gaussian at initialization. These values are then fed in tanh and solves vanishing gradient problem.
+
+We want the neural network to be able to move the distribution and scale it. So we introduce one more component called scale and shift.
+
+
+More techniques: layer normalization, group normalization
+
+### Resources
+1. https://bedirtapkan.com/posts/blog_posts/karpathy_3_makemore_activations/
+2. 

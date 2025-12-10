@@ -60,6 +60,7 @@ loss = F.cross_entropy(logits, ys)
 ### Mini-batches of dataset
 Instead of training on the entire dataset, which can be computationally expensive, mini-batches are used.
 Training on mini-batches provides an approximate gradient, which is often sufficient for training purposes and is much faster than using the full dataset.
+Mini batches are preferred for training efficiency.
     
 ```python
 ## Minibatch construction of size 32, over total data points in X

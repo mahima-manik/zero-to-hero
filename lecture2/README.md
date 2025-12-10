@@ -1,6 +1,9 @@
 # makemore
 
 This is a character level language model. 
+
+Softmax is an activation function commonly applied as the output of a neural network in multi-class classification tasks. It converts a vector of real numbers into a vector of probabilities.
+
 ### Exercise 1
 Train a **trigram language model**, i.e. take two characters as an input to predict the 3rd one. 
 Feel free to use either counting or a neural net. 
