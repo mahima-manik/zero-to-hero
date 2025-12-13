@@ -10,6 +10,8 @@ Example:
 
 In reality, it started with ~25, which is very high. So many iterations of gradient descent wasted initially.
 
+The random initialization in the example results in logits with extreme values, messing up the predictions.
+
 We want the logits to be rougly 0 when the network is initialized. They just don't have to be zero, but approximately equal. 
 
 Logits are derived by multiplying hidden layer output by `W2` and adding `b2`. To bring the values of logits closer to zero, we can do following:
@@ -114,6 +116,21 @@ We want the neural network to be able to move the distribution and scale it. So 
 
 More techniques: layer normalization, group normalization
 
+Saturation stabilizes around 5% dur to 5/3 gain. 5/3 is a good setting for Linear+Tanh stacking. 5/3 maybe comes from Kaiming initialization for Tanh. Reference of Pytorch: [here](https://docs.pytorch.org/docs/stable/nn.init.html)
+
+Why do we need Tanh layers at all?
+Because having just multiple Linear layers collapses into a single Linear layer in terms of presentation. Forward pass collapses. 
+
+Weight-Gradient Distribution on Parameters:
+- Grad:data ratio gives us an intuition of what is the scale of the gradient compared to the actual values. 
+- This is important because we will be taking a step update of the form `w = w - lr * grad`.
+- In last layer, grad:data ratio is around 2.0. That means gradients are much higher than some of the values inside the data. 
+
+Update to data ratio:
+- The ratio of update of t
+
 ### Resources
 1. https://bedirtapkan.com/posts/blog_posts/karpathy_3_makemore_activations/
-2. 
+2. https://karpathy.github.io/2019/04/25/recipe/
+3. Backprop basics & maths: https://github.com/ADGEfficiency/teaching-monolith/blob/master/backprop/intro-to-backprop.ipynb
+4. 
