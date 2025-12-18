@@ -4,7 +4,7 @@ At the initialization itself you have an idea what loss to expect based on loss 
 
 Example:
 - In the character-level model, we have 27 possible character
-- At the time of initializtion, all 27 chars should be around equally possible (`1/27.0`)
+- At the time of initialization, all 27 chars should be around equally possible (`1/27.0`)
 - We calculate loss by taking log of probability = `log(1/27.0)` ~ 3.2
 - So our gradient descend should start from the loss value of 3.2
 
@@ -88,15 +88,11 @@ When all examples give 0 gradient out on tanh, then it is called *dead neuron* -
 
 **Kaiming init**
 We know we need to fix initialization, but by how much value we multiply weights and biases?
-Kaiming normalize initialization: torch.nn.init
+Kaiming normalize initialization: in pytorch `torch.nn.init.kaiming_normal_`
 
 We want the neural network to have relatively simple activations, so we want unit gaussian throughout the network.
 
-Kaiming init is implemented in pytorch as torch.nn.init.kaiming_normal_.
-
-
-In practice, just normalizing by square root of fan-in is enough.
-
+In practice, just normalizing (dividing) by square root of fan-in is enough. Kaiming normalization for tanh: `(5/3)*(fan_in**0.5)`
 
 Game in front of activation. 
 
@@ -128,6 +124,8 @@ Weight-Gradient Distribution on Parameters:
 
 Update to data ratio:
 - The ratio of update of t
+
+With batch normalization introduced, we may not have to normalize weights with the fan in too. Batch will still be well behaved. 
 
 ### Resources
 1. https://bedirtapkan.com/posts/blog_posts/karpathy_3_makemore_activations/
